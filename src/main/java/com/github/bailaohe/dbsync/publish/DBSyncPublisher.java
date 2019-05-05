@@ -2,6 +2,7 @@ package com.github.bailaohe.dbsync.publish;
 
 import com.github.bailaohe.dbsync.event.DBSyncAppEvent;
 import com.github.bailaohe.dbsync.event.payload.RowBatchChanged;
+import com.github.bailaohe.repository.sync.IDBSyncPublisher;
 import org.springframework.context.support.ApplicationObjectSupport;
 
 import java.util.List;

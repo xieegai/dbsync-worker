@@ -1,9 +1,9 @@
 package com.github.bailaohe.dbsync.config;
 
 import com.github.bailaohe.dbsync.publish.DBSyncPublisher;
-import com.github.bailaohe.dbsync.publish.IDBSyncPublisher;
 import com.github.bailaohe.dbsync.subscribe.DBSyncHandlerRegistry;
 import com.github.bailaohe.dbsync.subscribe.DBSyncListener;
+import com.github.bailaohe.repository.sync.IDBSyncPublisher;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
