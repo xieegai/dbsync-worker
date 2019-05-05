@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 //import com.github.bailaohe.dbsync.subscribe.DBSyncController;
@@ -42,7 +43,11 @@ public class DBSyncConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public IDBSyncPublisher dbSyncPublisher() {
-        return new DBSyncPublisher();
+        DBSyncPublisher publisher = new DBSyncPublisher();
+        publisher.setExecutor(new ThreadPoolExecutor(8, 32,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(64)));
+        return publisher;
     }
 
 //    @Bean
