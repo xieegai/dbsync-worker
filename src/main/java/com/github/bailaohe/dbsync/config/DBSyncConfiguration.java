@@ -44,9 +44,12 @@ public class DBSyncConfiguration {
     @ConditionalOnMissingBean
     public IDBSyncPublisher dbSyncPublisher() {
         DBSyncPublisher publisher = new DBSyncPublisher();
+//        publisher.setExecutor(new ThreadPoolExecutor(8, 32,
+//                0L, TimeUnit.MILLISECONDS,
+//                new LinkedBlockingQueue<>(64)));
         publisher.setExecutor(new ThreadPoolExecutor(8, 32,
                 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(64)));
+                new LinkedBlockingQueue<>()));
         return publisher;
     }
 
