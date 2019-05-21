@@ -2,11 +2,14 @@ package com.github.bailaohe.dbsync.publish;
 
 import com.github.bailaohe.dbsync.event.DBSyncAppEvent;
 import com.github.bailaohe.dbsync.event.payload.RowBatchChanged;
+import com.github.bailaohe.dbsync.event.payload.RowChanged;
 import com.github.bailaohe.repository.sync.IDBSyncPublisher;
+import com.google.common.collect.ImmutableList;
 import lombok.Setter;
 import org.springframework.context.support.ApplicationObjectSupport;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class DBSyncPublisher extends ApplicationObjectSupport implements IDBSyncPublisher {
@@ -41,9 +44,7 @@ public class DBSyncPublisher extends ApplicationObjectSupport implements IDBSync
     @Override
     public <T> void publishDelete(Class<T> entityClass, String schema, String table, List<T> models, boolean async) {
         if (async && null != executor) {
-            executor.submit(() -> {
-                publishDeleteInternal(entityClass, schema, table, models);
-            });
+            executor.submit(() -> publishDeleteInternal(entityClass, schema, table, models));
         } else {
             publishDeleteInternal(entityClass, schema, table, models);
         }
@@ -62,22 +63,25 @@ public class DBSyncPublisher extends ApplicationObjectSupport implements IDBSync
     }
 
     @Override
-    public <T> void publishUpdate(Class<T> entityClass, String schema, String table, List<T> oldModels, List<T> newModels, boolean async) {
+    public <T> void publishUpdate(Class<T> entityClass, String schema, String table, List<T> oldModels, List<T> newModels, Set<String> modifiedFields, boolean async) {
         if (async && null != executor) {
             executor.submit(() -> {
-                publishUpdateInternal(entityClass, schema, table, oldModels, newModels);
+                publishUpdateInternal(entityClass, schema, table, oldModels, newModels, modifiedFields);
             });
         } else {
-            publishUpdateInternal(entityClass, schema, table, oldModels, newModels);
+            publishUpdateInternal(entityClass, schema, table, oldModels, newModels, modifiedFields);
         }
     }
 
-    private <T> void publishUpdateInternal(Class<T> entityClass, String schema, String table, List<T> oldModels, List<T> newModels) {
+    private <T> void publishUpdateInternal(Class<T> entityClass, String schema, String table, List<T> oldModels, List<T> newModels, Set<String> modifiedFields) {
         RowBatchChanged payload = RowBatchChanged.builder()
                 .db(schema)
                 .table(table)
                 .eventType("UPDATE")
                 .ts(System.currentTimeMillis())
+                .data(ImmutableList.of(RowChanged.builder()
+                        .columnsChanged(modifiedFields)
+                        .build()))
                 .build();
 
         DBSyncAppEvent event = new DBSyncAppEvent(entityClass, payload, oldModels, newModels);
