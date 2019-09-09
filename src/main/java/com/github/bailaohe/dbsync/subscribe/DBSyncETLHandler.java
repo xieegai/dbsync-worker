@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public abstract class DBSyncETLHandler<S, I, T> extends DBSyncHandler<S> {
     @Autowired
-    private AbstractService<I, S> sourceService;
+    protected AbstractService<I, S> sourceService;
 
     @Autowired
-    private AbstractService<I, T> targetService;
+    protected AbstractService<I, T> targetService;
 
     @Getter
     private Class<T> targetEntityClass;
