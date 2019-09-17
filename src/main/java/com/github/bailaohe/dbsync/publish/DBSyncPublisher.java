@@ -79,9 +79,9 @@ public class DBSyncPublisher extends ApplicationObjectSupport implements IDBSync
                 .table(table)
                 .eventType("UPDATE")
                 .ts(System.currentTimeMillis())
-                .data(ImmutableList.of(RowChanged.builder()
-                        .columnsChanged(modifiedFields)
+                .rows(ImmutableList.of(RowChanged.builder()
                         .build()))
+                .columnsChanged(modifiedFields)
                 .build();
 
         DBSyncAppEvent event = new DBSyncAppEvent(entityClass, payload, oldModels, newModels);

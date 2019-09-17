@@ -106,7 +106,7 @@ public abstract class DBSyncHandler<T> {
     private static List parseNewRows(RowBatchChanged payload, Class<?> entityClass) {
         SerializeConfig serializeConfig = new SerializeConfig();
         serializeConfig.propertyNamingStrategy = PropertyNamingStrategy.CamelCase;
-        return payload.getData().stream().map(RowChanged::getAfterUpdate)
+        return payload.getRows().stream().map(RowChanged::getSnapshot)
                 .map(x -> JSON.parseObject(JSON.toJSONString(x, serializeConfig), entityClass))
                 .collect(Collectors.toList());
     }
@@ -114,7 +114,7 @@ public abstract class DBSyncHandler<T> {
     private static List parseOldRows(RowBatchChanged payload, Class<?> entityClass) {
         SerializeConfig serializeConfig = new SerializeConfig();
         serializeConfig.propertyNamingStrategy = PropertyNamingStrategy.CamelCase;
-        return payload.getData().stream().map(RowChanged::getBeforeUpdate)
+        return payload.getRows().stream().map(RowChanged::getSnapshot)
                 .map(x -> JSON.parseObject(JSON.toJSONString(x, serializeConfig), entityClass))
                 .collect(Collectors.toList());
     }
@@ -139,7 +139,7 @@ public abstract class DBSyncHandler<T> {
         // drop data if not in subscribed columns (only for update)
         if (eventType == "UPDATE"
                 && !CollectionUtils.isEmpty(subscribeHit.getColumns())
-                && Collections.disjoint(subscribeHit.getColumns(), payload.columnsChanged())) {
+                && Collections.disjoint(subscribeHit.getColumns(), payload.getColumnsChanged())) {
             return;
         }
 

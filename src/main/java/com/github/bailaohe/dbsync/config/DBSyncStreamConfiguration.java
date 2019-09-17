@@ -1,9 +1,8 @@
 package com.github.bailaohe.dbsync.config;
 
-import com.github.bailaohe.dbsync.publish.DBSyncPublisher;
+import com.github.bailaohe.dbsync.event.DBSyncStreamEvent;
 import com.github.bailaohe.dbsync.subscribe.DBSyncHandlerRegistry;
-import com.github.bailaohe.dbsync.subscribe.DBSyncListener;
-import com.github.bailaohe.repository.sync.IDBSyncPublisher;
+import com.github.bailaohe.dbsync.subscribe.DBSyncStreamListener;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,7 +12,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.Set;
-import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 //import com.github.bailaohe.dbsync.subscribe.DBSyncController;
@@ -21,7 +19,7 @@ import java.util.stream.Collectors;
 //import com.github.bailaohe.dbsync.subscribe.DBInitService;
 
 @Configuration
-public class DBSyncConfiguration {
+public class DBSyncStreamConfiguration {
     @Value("${mysql.modify.subscribe:}")
     private String whiteListStr;
 
@@ -39,34 +37,14 @@ public class DBSyncConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DBSyncListener dbSyncListener() {
-        return new DBSyncListener(dmlModifyHandlerRegistry(), modifySubscribeSet());
+    public DBSyncStreamListener dbSyncStreamListener() {
+        return new DBSyncStreamListener(dmlModifyHandlerRegistry(), modifySubscribeSet());
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public IDBSyncPublisher dbSyncPublisher() {
-        DBSyncPublisher publisher = new DBSyncPublisher();
-        publisher.setExecutor(new ThreadPoolExecutor(8, 32,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>()));
-        return publisher;
+    public DBSyncStreamEvent dbSyncEvent() {
+        DBSyncStreamEvent event = new DBSyncStreamEvent();
+        return event;
     }
-
-//    @Bean
-//    public DBInitService dmlInitService() {
-//        return new DBInitService(dmlModifyHandlerRegistry());
-//    }
-//
-//    @Bean
-//    public DBSyncController dbSyncController() {
-//        return new DBSyncController(dmlInitService());
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public DBSyncEvent dbSyncEvent() {
-//        DBSyncEvent event = new DBSyncEvent();
-//        return event;
-//    }
 }

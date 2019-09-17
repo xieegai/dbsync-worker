@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -21,13 +19,10 @@ public class RowBatchChanged {
     private String logFile;
     private Long logFileOffset;
     private Long ts;
-    private List<RowChanged> data;
+    private List<RowChanged> rows;
+    private Set<String> columnsChanged;
 
     public String getLabel() {
         return db + "." + table;
-    }
-
-    public Set<String> columnsChanged() {
-        return data.stream().map(x -> x.getColumnsChanged()).flatMap(Collection::stream).distinct().collect(Collectors.toSet());
     }
 }

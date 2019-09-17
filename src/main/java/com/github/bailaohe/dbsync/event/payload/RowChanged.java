@@ -13,8 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RowChanged {
-    private Map<String, String> beforeUpdate;
-    private Map<String, String> afterUpdate;
-
-    private Set<String> columnsChanged;
+    private Map<String, String> preUpdate;
+    private Map<String, String> snapshot;
 }
