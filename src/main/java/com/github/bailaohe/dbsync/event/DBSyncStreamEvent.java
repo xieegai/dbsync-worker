@@ -6,7 +6,6 @@ import com.github.bailaohe.dbsync.event.payload.RowBatchChanged;
 
 /**
  * @author baihe
- * @date 2018/3/6
  */
 public class DBSyncStreamEvent extends AbstractEvent<RowBatchChanged> {
     @Override

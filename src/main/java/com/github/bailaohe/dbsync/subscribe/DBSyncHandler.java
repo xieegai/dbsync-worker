@@ -210,25 +210,25 @@ public abstract class DBSyncHandler<T> {
 
     /**
      * handler function when insert rows to the primary subscribe
-     * @param payload
-     * @param newRows
+     * @param payload the row change payload
+     * @param newRows the new rows to insert
      */
     public void processInsert(RowBatchChanged payload, List<T> newRows) {
     }
 
     /**
      * handler function when delete rows from the primary subscribe
-     * @param payload
-     * @param oldRows
+     * @param payload the row change payload
+     * @param oldRows the new rows to delete
      */
     public void processDelete(RowBatchChanged payload, List<T> oldRows) {
     }
 
     /**
      * handler function when update rows in the primary subscribe
-     * @param payload
-     * @param oldRows
-     * @param newRows
+     * @param payload the row change payload
+     * @param oldRows the new rows to delete
+     * @param newRows the new rows to insert
      */
     public void processUpdate(RowBatchChanged payload, List<T> oldRows, List<T> newRows) {
 
@@ -236,8 +236,8 @@ public abstract class DBSyncHandler<T> {
 
     /**
      * handler function when insert rows to the secondary subscribe
-     * @param payload
-     * @param newRows
+     * @param payload the row change payload
+     * @param newRows the new rows to insert
      */
     public void processSecondaryInsert(RowBatchChanged payload, List newRows) {
 
@@ -245,8 +245,8 @@ public abstract class DBSyncHandler<T> {
 
     /**
      * handler function when delete rows from the secondary subscribe
-     * @param payload
-     * @param oldRows
+     * @param payload the row change payload
+     * @param oldRows the new rows to delete
      */
     public void processSecondaryDelete(RowBatchChanged payload, List oldRows) {
 
@@ -254,9 +254,9 @@ public abstract class DBSyncHandler<T> {
 
     /**
      * handler function when update rows in the secondary subscribe
-     * @param payload
-     * @param oldRows
-     * @param newRows
+     * @param payload the row change payload
+     * @param oldRows the new rows to delete
+     * @param newRows the new rows to insert
      */
     public void processSecondaryUpdate(RowBatchChanged payload, List oldRows, List newRows) {
 
