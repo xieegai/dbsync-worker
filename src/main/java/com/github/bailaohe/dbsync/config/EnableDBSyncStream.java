@@ -1,5 +1,6 @@
 package com.github.bailaohe.dbsync.config;
 
+import com.github.bailaohe.csevent.annotation.EnableEventConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -8,5 +9,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import(DBSyncStreamConfiguration.class)
+@EnableEventConfig
 public @interface EnableDBSyncStream {
 }
