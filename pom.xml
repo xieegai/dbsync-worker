@@ -206,7 +206,7 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
-        <repository>
+	<!--        <repository>
             <id>oss-snapshots</id>
             <name>oss-snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -218,13 +218,18 @@
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-        </repository>
+	</repository> -->
     </repositories>
 
     <distributionManagement>
-        <snapshotRepository>
+        <!--<snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>-->
+        <snapshotRepository>
+          <id>xiaomai-snapshots</id>
+          <name>xiaomai-snapshots</name>
+          <url>http://nexus.xiaomaiketang.com:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
