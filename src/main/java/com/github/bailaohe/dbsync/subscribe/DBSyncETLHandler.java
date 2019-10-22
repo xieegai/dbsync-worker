@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public abstract class DBSyncETLHandler<S, I, T> extends DBSyncHandler<S> {
-    @Autowired
-    protected AbstractService<I, S> sourceService;
+//    @Autowired
+//    protected AbstractService<I, S> sourceService;
 
     @Autowired
     protected AbstractService<I, T> targetService;
