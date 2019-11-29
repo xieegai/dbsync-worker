@@ -114,7 +114,7 @@ public abstract class DBSyncHandler<T> {
     private static List parseOldRows(RowBatchChanged payload, Class<?> entityClass) {
         SerializeConfig serializeConfig = new SerializeConfig();
         serializeConfig.propertyNamingStrategy = PropertyNamingStrategy.CamelCase;
-        return payload.getRows().stream().map(RowChanged::getSnapshot)
+        return payload.getRows().stream().map(RowChanged::getPreUpdate)
                 .map(x -> JSON.parseObject(JSON.toJSONString(x, serializeConfig), entityClass))
                 .collect(Collectors.toList());
     }
