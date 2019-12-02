@@ -12,12 +12,12 @@ import java.util.Set;
  * Created by baihe on 2017/8/24.
  */
 public class DBSyncHandlerRegistry extends ApplicationObjectSupport {
-    private ArrayListMultimap<String, DBSyncHandler> handlerMap;
+    private ArrayListMultimap<String, IDBSyncHandler> handlerMap;
 
     @PostConstruct
     public void init() {
         handlerMap = ArrayListMultimap.create();
-        Map<String, DBSyncHandler> beanMap = getApplicationContext().getBeansOfType(DBSyncHandler.class);
+        Map<String, IDBSyncHandler> beanMap = getApplicationContext().getBeansOfType(IDBSyncHandler.class);
         beanMap.values().forEach(x -> {
             Set<String> labels = x.subscribeLabels();
             for (String label: labels) {
@@ -26,7 +26,7 @@ public class DBSyncHandlerRegistry extends ApplicationObjectSupport {
         });
     }
 
-    public List<DBSyncHandler> get(String interest) {
+    public List<IDBSyncHandler> get(String interest) {
         return handlerMap.get(interest);
     }
 

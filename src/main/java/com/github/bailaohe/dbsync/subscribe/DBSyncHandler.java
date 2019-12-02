@@ -18,7 +18,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class DBSyncHandler<T> {
+public abstract class DBSyncHandler<T> implements IDBSyncHandler {
 
     @Getter
     protected Class<T> subscribeEntityClass;

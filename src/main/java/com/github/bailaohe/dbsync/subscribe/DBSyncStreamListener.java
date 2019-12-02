@@ -24,8 +24,7 @@ public class DBSyncStreamListener {
 
         if (CollectionUtils.isEmpty(tableWhiteSet) || tableWhiteSet.contains(interest)) {
             if (handlerRegistry.containsKey(interest)) {
-                List<DBSyncHandler> handlers = handlerRegistry.get(interest);
-
+                List<IDBSyncHandler> handlers = handlerRegistry.get(interest);
                 handlers.forEach(handler -> handler.onChange(payload));
             }
         }
