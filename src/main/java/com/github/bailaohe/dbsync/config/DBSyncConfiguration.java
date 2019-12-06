@@ -3,44 +3,33 @@ package com.github.bailaohe.dbsync.config;
 import com.github.bailaohe.dbsync.publish.DBSyncPublisher;
 import com.github.bailaohe.dbsync.subscribe.DBSyncHandlerRegistry;
 import com.github.bailaohe.dbsync.subscribe.DBSyncListener;
+import com.github.bailaohe.dbsync.subscribe.DBSyncProcessor;
 import com.github.bailaohe.repository.sync.IDBSyncPublisher;
-import com.google.common.collect.Sets;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
-
-//import com.github.bailaohe.dbsync.subscribe.DBSyncController;
-//import com.github.bailaohe.dbsync.event.DBSyncEvent;
-//import com.github.bailaohe.dbsync.subscribe.DBInitService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class DBSyncConfiguration {
-    @Value("${mysql.modify.subscribe:}")
-    private String whiteListStr;
-
     @Bean
     @ConditionalOnMissingBean
-    public Set<String> modifySubscribeSet() {
-        return StringUtils.isEmpty(whiteListStr) ? Sets.newHashSet() : Arrays.stream(whiteListStr.split(",")).collect(Collectors.toSet());
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public DBSyncHandlerRegistry dmlModifyHandlerRegistry() {
+    public DBSyncHandlerRegistry dbSyncHandlerRegistry() {
         return new DBSyncHandlerRegistry();
     }
 
     @Bean
     @ConditionalOnMissingBean
+    public DBSyncProcessor dbSyncProcessor() {
+        return new DBSyncProcessor(dbSyncHandlerRegistry());
+    }
+
+    @Bean
     public DBSyncListener dbSyncListener() {
-        return new DBSyncListener(dmlModifyHandlerRegistry(), modifySubscribeSet());
+        return new DBSyncListener(dbSyncProcessor());
     }
 
     @Bean
@@ -52,21 +41,4 @@ public class DBSyncConfiguration {
                 new LinkedBlockingQueue<>()));
         return publisher;
     }
-
-//    @Bean
-//    public DBInitService dmlInitService() {
-//        return new DBInitService(dmlModifyHandlerRegistry());
-//    }
-//
-//    @Bean
-//    public DBSyncController dbSyncController() {
-//        return new DBSyncController(dmlInitService());
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public DBSyncEvent dbSyncEvent() {
-//        DBSyncEvent event = new DBSyncEvent();
-//        return event;
-//    }
 }

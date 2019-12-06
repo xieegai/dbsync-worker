@@ -15,18 +15,16 @@ import java.util.Set;
 @AllArgsConstructor
 public class DBSyncStreamListener {
 
-    private DBSyncHandlerRegistry handlerRegistry;
-    private Set<String> tableWhiteSet;
+    private DBSyncProcessor dbSyncProcessor;
+//    private Set<String> tableWhiteSet;
 
     @EventHandler(DBSyncStreamEvent.class)
     public void processBinlogNotify(RowBatchChanged payload) {
         String interest = payload.getDb() + "." + payload.getTable();
 
-        if (CollectionUtils.isEmpty(tableWhiteSet) || tableWhiteSet.contains(interest)) {
-            if (handlerRegistry.containsKey(interest)) {
-                List<IDBSyncHandler> handlers = handlerRegistry.get(interest);
-                handlers.forEach(handler -> handler.onChange(payload));
-            }
-        }
+        dbSyncProcessor.processDBSync(interest, payload);
+//        if (CollectionUtils.isEmpty(tableWhiteSet) || tableWhiteSet.contains(interest)) {
+//            dbSyncProcessor.processDBSync(interest, payload);
+//        }
     }
 }

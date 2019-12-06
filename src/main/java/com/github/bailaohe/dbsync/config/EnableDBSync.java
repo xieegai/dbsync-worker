@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(DBSyncConfiguration.class)
+@Import({DBSyncConfiguration.class, DBSyncAppConfiguration.class})
 public @interface EnableDBSync {
 }
