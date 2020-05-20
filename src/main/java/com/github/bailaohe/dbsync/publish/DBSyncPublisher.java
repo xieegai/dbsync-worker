@@ -1,10 +1,10 @@
 package com.github.bailaohe.dbsync.publish;
 
 import com.github.bailaohe.dbsync.event.DBSyncAppEvent;
-import com.github.bailaohe.dbsync.event.payload.RowBatchChanged;
-import com.github.bailaohe.dbsync.event.payload.RowChanged;
 import com.github.bailaohe.repository.sync.IDBSyncPublisher;
 import com.google.common.collect.ImmutableList;
+import com.jiejing.dbsync.event.payload.RowBatchChanged;
+import com.jiejing.dbsync.event.payload.RowChanged;
 import lombok.Setter;
 import org.springframework.context.support.ApplicationObjectSupport;
 

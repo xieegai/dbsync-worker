@@ -8,9 +8,9 @@
         <version>2.0.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.bailaohe</groupId>
+    <groupId>com.jiejing.dbsync</groupId>
     <artifactId>dbsync-worker</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>dbsync-worker</name>
     <description>specification of repository servicelet</description>
 
@@ -35,20 +35,13 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>22.0</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.github.bailaohe</groupId>
+            <groupId>com.jiejing.dbsync</groupId>
             <artifactId>dbsync-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.bailaohe</groupId>
-            <artifactId>spring-cloud-stream-event</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

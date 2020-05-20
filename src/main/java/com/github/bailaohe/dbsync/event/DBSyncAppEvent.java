@@ -1,6 +1,6 @@
 package com.github.bailaohe.dbsync.event;
 
-import com.github.bailaohe.dbsync.event.payload.RowBatchChanged;
+import com.jiejing.dbsync.event.payload.RowBatchChanged;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
